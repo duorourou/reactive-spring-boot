@@ -8,6 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.nio.charset.Charset;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserRouterTest {
@@ -17,10 +19,13 @@ public class UserRouterTest {
 
     @Test
     public void shouldFindAUserByName() {
-        webClient.get().uri("/users/{name}", "James")
+        webClient.get()
+                .uri("/users/{name}", "James")
                 .accept(MediaType.APPLICATION_JSON_UTF8)
+                .acceptCharset(Charset.forName("utf-8"))
                 .exchange()
                 .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON_UTF8)
                 .expectBody()
                 .jsonPath("$.name")
                 .isEqualTo("James")

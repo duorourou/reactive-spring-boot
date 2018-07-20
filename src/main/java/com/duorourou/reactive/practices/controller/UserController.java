@@ -6,17 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
-
 @RestController
-@RequestMapping(path = "/users", produces = APPLICATION_JSON_UTF8_VALUE,
-        consumes = APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(path = "/users")
 public class UserController {
 
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping(path = "/{name}")
+    @GetMapping(path = "/{name}" )
     public Mono<User> getByName(@PathVariable String name) {
         return userRepository.findByName(name);
     }
