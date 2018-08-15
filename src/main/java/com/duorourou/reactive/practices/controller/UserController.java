@@ -4,6 +4,7 @@ import com.duorourou.reactive.practices.domain.User;
 import com.duorourou.reactive.practices.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -16,6 +17,11 @@ public class UserController {
     @GetMapping(path = "/{name}" )
     public Mono<User> getByName(@PathVariable String name) {
         return userRepository.findByName(name);
+    }
+
+    @GetMapping
+    public Flux<User> list() {
+        return userRepository.findAll();
     }
 
     @PostMapping
